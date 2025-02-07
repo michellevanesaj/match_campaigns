@@ -1,0 +1,31 @@
+-------------- Información suministrada por tiqueteras (Alcancías web service)-----------------------------------------------
+SELECT
+    campaign.name as customer,
+    CASE
+            WHEN campaign.web_service= 'true' and campaign.name=  'eticket' then split_part(piggy.name, '-', 1)
+            WHEN campaign.web_service= 'true' and campaign.name=  'Tuboleta' then split_part(piggy.name, '-', 1)
+            WHEN campaign.web_service= 'false' then campaign.name
+                end as campaign,
+    date_part('year', MAX(pay_limit_date - INTERVAL '5h')) as year_campaign
+
+FROM purchases_purchase purchase
+JOIN piggys_piggy piggy on purchase.id = piggy.purchase_id
+JOIN piggys_piggyproduct product ON piggy.piggy_product_id = product.id
+JOIN piggys_piggycampaign campaign on product.piggy_campaign_id = campaign.id
+WHERE web_service= true
+GROUP BY     campaign.name,
+    CASE
+            WHEN campaign.web_service= 'true' and campaign.name=  'eticket' then split_part(piggy.name, '-', 1)
+            WHEN campaign.web_service= 'true' and campaign.name=  'Tuboleta' then split_part(piggy.name, '-', 1)
+            WHEN campaign.web_service= 'false' then campaign.name
+                end;
+-----------------------------------Eventos dummy (info interna)-------------------------------------------------------------------------
+SELECT
+    case
+           when dummy_redirect like '%eticket%' then 'eticket'
+           when dummy_redirect like '%tuboleta%' then 'Tuboleta'
+           else null end as customer,
+       slug as campaign_slug, name as campaign, date_part('year', (event_start_date - INTERVAL '5h')) as year_campaign,
+       event_city
+FROM piggys_piggycampaign
+where dummy= true
