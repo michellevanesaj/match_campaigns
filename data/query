@@ -6,7 +6,7 @@ SELECT
             WHEN campaign.web_service= 'true' and campaign.name=  'Tuboleta' then split_part(piggy.name, '-', 1)
             WHEN campaign.web_service= 'false' then campaign.name
                 end as campaign,
-    date_part('year', MAX(pay_limit_date - INTERVAL '5h')) as year_campaign
+    date_part('year', MAX(pay_limit_date - INTERVAL '5h')) as campaign_year
 
 FROM purchases_purchase purchase
 JOIN piggys_piggy piggy on purchase.id = piggy.purchase_id
@@ -25,7 +25,7 @@ SELECT
            when dummy_redirect like '%eticket%' then 'eticket'
            when dummy_redirect like '%tuboleta%' then 'Tuboleta'
            else null end as customer,
-       slug as campaign_slug, name as campaign, date_part('year', (event_start_date - INTERVAL '5h')) as year_campaign,
+       slug as campaign_slug, name as campaign, date_part('year', (event_start_date - INTERVAL '5h')) as campaign_year,
        event_city
 FROM piggys_piggycampaign
 where dummy= true
