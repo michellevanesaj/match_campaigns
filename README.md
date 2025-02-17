@@ -1,7 +1,7 @@
 ## Match campaigns
 
 ### Problema:
-Los eventos de eticket y tuboleta no se pueden diferenciar debido a que todos se encuentran en la misma campaña, es decir, la tiquetera. Esto no permite personalizar clasificar las Alcancías según su genero, ciudad, además para mercadeo y producto resulta un proceso operativo mayor personalizar las campañas según la info anterior.
+Los eventos de eticket y tuboleta no se pueden diferenciar debido a que todos se encuentran en la misma campaña, es decir, la tiquetera. Esto no permite clasificar las Alcancías según su genero, ciudad, además para mercadeo y producto resulta un proceso operativo mayor personalizar las campañas según la info anterior.
 
 ### Objetivo:
 
