@@ -1,0 +1,12 @@
+with base as (select count(*) as piggy, count(pp.piggy_id) as piggy_dummy, split_part(piggys_piggy.name, '-', 1) as campaign
+from piggys_piggy
+join piggys_piggyproduct on piggys_piggy.piggy_product_id = piggys_piggyproduct.id
+    join piggys_piggycampaign on piggys_piggyproduct.piggy_campaign_id = piggys_piggycampaign.id
+    left join piggys_piggydummyclassification pp on piggys_piggy.id = pp.piggy_id
+where web_service= true
+  and piggys_piggy.creation_date - interval '5h'<= '2025-03-12 09:00:00'
+group by split_part(piggys_piggy.name, '-', 1)
+having count(pp.piggy_id)>1)
+select piggy, piggy_dummy, campaign from base
+--where campaign = 'FESTIVAL ESTÉREO PICNIC 2024 COMBO 4 DÍAS'
+where piggy!=piggy_dummy;
